@@ -238,9 +238,12 @@ def test_alerta():
     return redirect(url_for('dashboard'))
 
 # ------------------------------
-# Inicialización
+# Arranque en Render (Bootstrap)
 # ------------------------------
-if __name__ == '__main__':
+_scheduler_started = False
+scheduler = None
+
+def _init_db_and_seed():
     with app.app_context():
         db.create_all()
         if not User.query.first():
@@ -249,8 +252,23 @@ if __name__ == '__main__':
             db.session.add_all([user1, user2])
             db.session.commit()
 
-    scheduler = BackgroundScheduler(timezone="America/Lima")
-    scheduler.add_job(revisar_vencimientos, 'cron', hour=9, minute=0)
-    scheduler.start()
+def _start_scheduler_once():
+    global scheduler, _scheduler_started
+    if not _scheduler_started:
+        scheduler = BackgroundScheduler(timezone="America/Lima")
+        scheduler.add_job(revisar_vencimientos, 'cron', hour=9, minute=0)
+        scheduler.start()
+        _scheduler_started = True
 
+@app.before_first_request
+def _bootstrap_on_first_request():
+    _init_db_and_seed()
+    _start_scheduler_once()
+
+# ------------------------------
+# Inicialización local
+# ------------------------------
+if __name__ == '__main__':
+    _init_db_and_seed()
+    _start_scheduler_once()
     app.run(debug=True)

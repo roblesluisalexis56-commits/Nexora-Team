@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow">
+      <div class="card-body">
+        <h3 class="mb-3">{{ 'Editar' if venta else 'Nueva' }} Venta</h3>
+        <form method="POST">
+          <div class="mb-3">
+            <label>Nombre Cliente</label>
+            <input type="text" name="nombre_cliente" class="form-control" value="{{ venta.nombre_cliente if venta else '' }}" required>
+          </div>
+          <div class="mb-3">
+            <label>Número Cliente</label>
+            <input type="text" name="numero_cliente" class="form-control" value="{{ venta.numero_cliente if venta else '' }}" required>
+          </div>
+          <div class="mb-3">
+            <label>Correo Cliente</label>
+            <input type="email" name="correo_cliente" class="form-control" value="{{ venta.correo_cliente if venta else '' }}" required>
+          </div>
+          <div class="mb-3">
+            <label>Medio de Pago</label>
+            <input type="text" name="medio_pago" class="form-control" value="{{ venta.medio_pago if venta else '' }}" required>
+          </div>
+          <div class="mb-3">
+            <label>Estado de Pago</label>
+            <select name="estado_pago" class="form-select">
+              <option value="Hecho" {% if venta and venta.estado_pago=="Hecho" %}selected{% endif %}>Hecho</option>
+              <option value="Pendiente" {% if venta and venta.estado_pago=="Pendiente" %}selected{% endif %}>Pendiente</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label>Servicio</label>
+            <input type="text" name="servicio" class="form-control" value="{{ venta.servicio if venta else '' }}" required>
+          </div>
+          <div class="mb-3">
+            <label>Cuenta Asociada</label>
+            <input type="text" name="cuenta_asociada" class="form-control" value="{{ venta.cuenta_asociada if venta else '' }}" required>
+          </div>
+          <div class="mb-3">
+            <label>Contraseña</label>
+            <input type="text" name="contraseña" class="form-control" value="{{ venta.contraseña if venta else '' }}" required>
+          </div>
+          <div class="mb-3">
+            <label>Dinero</label>
+            <input type="number" step="0.01" name="dinero" class="form-control" 
+            value="{{ venta.dinero if venta else '' }}" required>
+          </div>
+          <div class="mb-3">
+            <label>Fecha Inicio</label>
+            <input type="date" name="fecha_inicio" class="form-control" value="{{ venta.fecha_inicio if venta else '' }}" required>
+          </div>
+          <div class="mb-3">
+            <label>Fecha Fin</label>
+            <input type="date" name="fecha_fin" class="form-control" value="{{ venta.fecha_fin if venta else '' }}" required>
+          </div>
+          <div class="mb-3">
+            <label>Admin que recibió el pago</label>
+            <select name="admin_pago" class="form-select">
+              <option value="Luis" {% if venta and venta.admin_pago=="Luis" %}selected{% endif %}>Luis</option>
+              <option value="Johan" {% if venta and venta.admin_pago=="Johan" %}selected{% endif %}>Johan</option>
+            </select>
+          </div>
+          <button class="btn btn-primary w-100">💾 Guardar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

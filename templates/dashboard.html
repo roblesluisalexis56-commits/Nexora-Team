@@ -2,8 +2,14 @@
 {% block content %}
 <h2 class="mb-4">📊 Ventas Registradas</h2>
 
-<div class="mb-3">
-  <h5>Total Ingresos: <span class="badge bg-success">${{ "%.2f"|format(total_ingresos) }}</span></h5>
+<!-- Tarjeta de Total de Ingresos -->
+<div class="card text-white bg-success mb-4 shadow">
+  <div class="card-body text-center">
+    <h5 class="card-title">💵 Total de Ingresos</h5>
+    <p class="card-text fs-4 fw-bold">
+      ${{ "%.2f"|format(total_ingresos) }}
+    </p>
+  </div>
 </div>
 
 <div class="table-responsive">
